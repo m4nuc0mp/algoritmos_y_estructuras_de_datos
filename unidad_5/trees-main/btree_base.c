@@ -43,7 +43,15 @@ typedef struct _btn {
  * Crea un nodo de un BTN en base a un valor t_elem_btree
  */
 btn* btn_new(t_elem_btree value) {
-    /**** COMPLETAR ****/
+    btn* new_node = (btn*) malloc(sizeof(btn));
+
+    if (NULL != new_node)
+    {
+        new_node->value = value;
+        new_node->left = NULL;
+        new_node->right = NULL;
+    }
+    return new_node;    
 }
 
 /**
@@ -51,6 +59,13 @@ btn* btn_new(t_elem_btree value) {
  */
 void btn_free(btn** node) {
     /**** COMPLETAR ****/
+    if (NULL != *node)
+    {
+        btn_free(&(*node)->left);
+        btn_free(&(*node)->right);
+        free(*node);
+    }
+    
 }
 
 /** 
@@ -59,25 +74,52 @@ void btn_free(btn** node) {
  * Debe devolver la referencia a la ubicación del puntero al nodo. Si no existe, devuelve NULL
  */ 
 btn** btn_find(btn** node, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree)) {
-    /**** COMPLETAR ****/
+
+
+    if ((NULL == *node) || (value == (*node)->value))
+    {
+        return node;
+    }
+    else if (value < (*node)->value)
+    {
+        btn_find(&(*node)->left, value, cmp);
+    }
+    else
+    {
+        btn_find(&(*node)->right, value, cmp);
+    }
 }
 
 /**
  * Devuelve 1 si el nodo es una hoja.
  * Devuelve 0 si no es una hoja.
  */
-int btn_isLeaf(btn *node) {
-    /**** COMPLETAR ****/
+int
+btn_isLeaf(btn *node)
+{
+    int is_a_leaf = 0;
+
+    if ( (NULL == node->left) && (NULL == node->right) )
+    {
+        is_a_leaf = 1;
+    }
+
+    return is_a_leaf;
 }
 
 /**
  * Cuenta la cantidad de nodos de un árbol binario.
  */
-int btn_count(btn *node) {
+int
+btn_count(btn *node)
+{
     int result = 0;
-    if (node != NULL) {
+    
+    if (node != NULL)
+    {
         result = 1 + btn_count(node->left) + btn_count(node->right);
     }
+
     return result;
 }
 
@@ -87,8 +129,31 @@ int btn_count(btn *node) {
  * - Si no es NULL lo agrega en el hijo con menor cantidad de nodos,
  * - Si sus hijos tienen la misma cantidad de nodos lo agrega a la izquierda.
  */
-int btn_insert(btn **node, btn *newNode) {
-    /**** COMPLETAR ****/
+int
+btn_insert(btn **node, btn *newNode)
+{
+    int success = 1;
+    int left_childs = btn_count((*node)->left);
+    int right_childs = btn_count((*node)->right);
+
+    if (NULL == *node)
+    {
+        *node = newNode;
+    }
+    else if (left_childs <= right_childs)
+    {
+        btn_insert(&(*node)->left, newNode);
+    }
+    else if (left_childs > right_childs)
+    {
+        btn_insert(&(*node)->right, newNode);
+    }
+    else
+    {
+        success = 0;
+    }
+
+    return success;
 }
 
 /**
@@ -97,8 +162,12 @@ int btn_insert(btn **node, btn *newNode) {
  * - Si no es NULL lo agrega en el hijo con menor cantidad de nodos,
  * - Si sus hijos tienen la misma cantidad de nodos lo agrega a la izquierda.
  */
-int btn_insert_value(btn **node, int value) {
-    /**** COMPLETAR ****/
+int
+btn_insert_value(btn **node, int value)
+{
+    btn* new_node = btn_new(value);
+
+    return btn_insert(node, new_node);
 }
 
 
@@ -106,14 +175,30 @@ int btn_insert_value(btn **node, int value) {
  * Determinar el nivel de un nodo.
  * - Recibe como entrada la raíz, un valor y una función de comparación de valores.
  */
-int _btn_level(btn *node, t_elem_btree value, int level, int cmp(t_elem_btree, t_elem_btree)) {
+int
+_btn_level(btn *node, t_elem_btree value, int level, int cmp(t_elem_btree, t_elem_btree)) {
     /**** COMPLETAR ****/
 }
 
-int btn_level(btn* root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree)) {
-    /**** COMPLETAR ****/
+int
+btn_level(btn* root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree))
+{
+    if (NULL == root)
+    {
+        return 0;
+    }
+    else if ()
+    {
+
+    }
+    
 }
 
+int
+cmp(t_elem_btree value_a, t_elem_btree value_b)
+{
+    
+}
 
 /**
  * Devuelve el valor máximo entre 2 enteros.
