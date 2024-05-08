@@ -1,47 +1,80 @@
-#include "btree_base.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+/**************************************************************/
+/*                       NOMENCLATURAS                        */
+/**************************************************************/
+/**
+ * BT - Binary Tree: Árbol binario.
+ * BTN - binary tree node: nodo de árbol binario.
+ * SBT - Search Binary Tree: ABB - Árbol binario de búsqueda.
+ * AVL - AVL Tree: Árbol AVL.
+ * root: nodo raíz del árbol.
+ * parent node: nodo padre.
+ * child node: nodo hijo.
+ * internal node,
+ * inner node,
+ * inode,
+ * branch node: nodo interno, que tiene hijos.
+ * external node,
+ * leaf node,
+ * outer node,
+ * terminal node: nodo hoja de un árbol.
+ */
+/**************************************************************/
+
+/**
+ *  Binary Tree Node Struct
+ */
 #define t_elem_btree int
 
-typedef struct _btn
-{
+typedef struct _btn {
     t_elem_btree value;
     struct _btn *left;
     struct _btn *right;
 } btn;
 
-btn*
-btn_new(t_elem_btree value)
-{
+/**************************************************************/
+/*                     ÁRBOLES BINARIOS                       */
+/**************************************************************/
+
+/**
+ * Crea un nodo de un BTN en base a un valor t_elem_btree
+ */
+btn* btn_new(t_elem_btree value) {
+    /**** COMPLETAR ****/
     btn* new_node = (btn*) malloc(sizeof(btn));
 
     if (NULL != new_node)
     {
         new_node->value = value;
-        
         new_node->left = NULL;
-
         new_node->right = NULL;
     }
-
-    return new_node;    
+    return new_node;
 }
 
-void
-btn_free(btn** node)
-{
+/**
+ * Elimina un nodo, si tiene hijos elimina sus hijos también.
+ */
+void btn_free(btn** node) {
+    /**** COMPLETAR ****/
     if (NULL != *node)
     {
         btn_free(&(*node)->left);
-
         btn_free(&(*node)->right);
-        
         free(*node);
-    }    
+    }
 }
 
-btn**
-btn_find(btn** node, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree))
-{
+/** 
+ * Busca un nodo con un determinado elemento y devuelve su referencia
+ * Se busca el nodo en pre-order (debe recorrer todo el árbol no hay un criterio de ordenamiento)
+ * Debe devolver la referencia a la ubicación del puntero al nodo. Si no existe, devuelve NULL
+ */ 
+btn** btn_find(btn** node, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree)) {
+    /**** COMPLETAR ****/
     if ((NULL == *node) || cmp(value, (*node)->value))
     {
         return node;
@@ -56,35 +89,40 @@ btn_find(btn** node, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree))
     }
 }
 
-int
-btn_isLeaf(btn *node)
-{
+/**
+ * Devuelve 1 si el nodo es una hoja.
+ * Devuelve 0 si no es una hoja.
+ */
+int btn_isLeaf(btn *node) {
+    /**** COMPLETAR ****/
     int is_a_leaf = 0;
 
     if ( (NULL == node->left) && (NULL == node->right) )
     {
         is_a_leaf = 1;
     }
-
     return is_a_leaf;
 }
 
-int
-btn_count(btn *node)
-{
+/**
+ * Cuenta la cantidad de nodos de un árbol binario.
+ */
+int btn_count(btn *node) {
     int result = 0;
-    
-    if (node != NULL)
-    {
+    if (node != NULL) {
         result = 1 + btn_count(node->left) + btn_count(node->right);
     }
-
     return result;
 }
 
-int
-btn_insert(btn **node, btn *newNode)
-{
+/**
+ * Agrega un nodo en un árbol binario con el siguiente criterio:
+ * - Si el subárbol es nulo se agrega ahí,
+ * - Si no es NULL lo agrega en el hijo con menor cantidad de nodos,
+ * - Si sus hijos tienen la misma cantidad de nodos lo agrega a la izquierda.
+ */
+int btn_insert(btn **node, btn *newNode) {
+    /**** COMPLETAR ****/
     int success = 1;
     int left_childs = btn_count((*node)->left);
     int right_childs = btn_count((*node)->right);
@@ -108,72 +146,91 @@ btn_insert(btn **node, btn *newNode)
     return success;
 }
 
-int
-btn_insert_value(btn **node, int value)
-{
+/**
+ * Agrega un valor a un BT con el criterio:
+ * - Si el subárbol es nulo se agrega ahí,
+ * - Si no es NULL lo agrega en el hijo con menor cantidad de nodos,
+ * - Si sus hijos tienen la misma cantidad de nodos lo agrega a la izquierda.
+ */
+int btn_insert_value(btn **node, int value) {
+    /**** COMPLETAR ****/
     btn* new_node = btn_new(value);
 
     return btn_insert(node, new_node);
 }
 
-int
-_btn_level(btn *node, t_elem_btree value, int level, int cmp(t_elem_btree, t_elem_btree)) {
+
+/**
+ * Determinar el nivel de un nodo.
+ * - Recibe como entrada la raíz, un valor y una función de comparación de valores.
+ */
+int _btn_level(btn *node, t_elem_btree value, int level, int cmp(t_elem_btree, t_elem_btree)) {
     /**** COMPLETAR ****/
 }
 
-int
-btn_level(btn* root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree))
-{
-    // if (NULL == root)
-    // {
-    //     return 0;
-    // }
-    // else if ()
-    // {
-
-    // }
+int btn_level(btn* root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree)) {
+    /**** COMPLETAR ****/
 }
 
+/**
+ * Comparar dos valores
+ * - Devuelve -1 si a < b, 0 si son iguales, 1 si a > b 
+ */
 int
 cmp(t_elem_btree value_a, t_elem_btree value_b)
 {
-    
+    if (value_a > value_b)
+    {
+        return 1;
+    }
+    else if (value_a < value_b)
+    {
+        return -1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
-int
-_max(int a, int b)
-{
-    return (a > b) ? a : b;
-}
 
-t_elem_btree
-btn_height(btn *node)
-{
+/**
+ * Devuelve el valor máximo entre 2 enteros.
+ * Función auxiliar utilizada en height.
+ */
+int _max(int a, int b) { return (a > b) ? a : b; }
+
+/**
+ * Devuelve la altura de un BTN
+ */
+t_elem_btree btn_height(btn *node) {
     int result = -1;
     /**** COMPLETAR ****/
-
     return result;
 }
 
-void
-btn_inorder(btn *node, void btn_do(btn*, void*), void* ctx)
-{
+/**
+ * Recorrido de un BT en inorden
+ */
+void btn_inorder(btn *node, void btn_do(btn*, void*), void* ctx) {
     if (!node) return;
 
     /**** COMPLETAR ****/
 }
 
-void
-btn_postorder(btn *node, void btn_do(btn*, void*), void* ctx)
-{
+/**
+ * Recorrido de un BT en postorder
+ */
+void btn_postorder(btn *node, void btn_do(btn*, void*), void* ctx) {
     if (!node) return;
 
     /**** COMPLETAR ****/
 }
 
-void
-btn_preorder(btn *node, void btn_do(btn*, void*), void* ctx)
-{
+/**
+ * Recorrido de un BT en preorder
+ */
+void btn_preorder(btn *node, void btn_do(btn*, void*), void* ctx) {
     if (!node) return;
 
     /**** COMPLETAR ****/
