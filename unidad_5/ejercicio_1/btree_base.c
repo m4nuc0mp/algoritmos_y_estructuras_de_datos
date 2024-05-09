@@ -154,10 +154,14 @@ int btn_insert_value(btn **node, int value) {
  */
 int _btn_level(btn *node, t_elem_btree value, int level, int cmp(t_elem_btree, t_elem_btree)) {
     /**** COMPLETAR ****/
+
+    // Consultar!!
 }
 
 int btn_level(btn* root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree)) {
     /**** COMPLETAR ****/
+
+    // Consultar!!
 }
 
 /**
@@ -216,7 +220,9 @@ void btn_postorder(btn *node, void btn_do(btn*, void*), void* ctx) {
     if (!node) return;
 
     /**** COMPLETAR ****/
-
+    btn_postorder(node->left, btn_do, ctx);
+    btn_postorder(node->right, btn_do, ctx);
+    btn_do(node, ctx);
 }
 
 /**
@@ -226,9 +232,16 @@ void btn_preorder(btn *node, void btn_do(btn*, void*), void* ctx) {
     if (!node) return;
 
     /**** COMPLETAR ****/
+    bnt_do(node, ctx);
+    btn_preorder(node->left, btn_do, ctx);
+    btn_preorder(node->right, btn_do,ctx);
 }
 
+void btn_do(btn* node, void* ctx) {
+    char* format = (char*) ctx;
 
+    printf("%*d", format, node->value);
+}
 /**************************************************************/
 /*                         ADICIONALES                        */
 /**************************************************************/
