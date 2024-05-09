@@ -193,6 +193,7 @@ int _max(int a, int b) { return (a > b) ? a : b; }
 t_elem_btree btn_height(btn *node) {
     int result = -1;
     /**** COMPLETAR ****/
+    
     return result;
 }
 
@@ -203,6 +204,9 @@ void btn_inorder(btn *node, void btn_do(btn*, void*), void* ctx) {
     if (!node) return;
 
     /**** COMPLETAR ****/
+    btn_inorder(node->left, btn_do, ctx);
+    btn_do(node, ctx);
+    btn_inorder(node->right, btn_do, ctx);
 }
 
 /**
@@ -212,6 +216,7 @@ void btn_postorder(btn *node, void btn_do(btn*, void*), void* ctx) {
     if (!node) return;
 
     /**** COMPLETAR ****/
+
 }
 
 /**
