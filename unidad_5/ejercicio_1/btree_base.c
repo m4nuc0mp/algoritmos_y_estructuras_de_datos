@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "btree_base.h"
 
 /**************************************************************/
 /*                       NOMENCLATURAS                        */
@@ -24,16 +22,6 @@
  */
 /**************************************************************/
 
-/**
- *  Binary Tree Node Struct
- */
-#define t_elem_btree int
-
-typedef struct _btn {
-    t_elem_btree value;
-    struct _btn *left;
-    struct _btn *right;
-} btn;
 
 /**************************************************************/
 /*                     ÁRBOLES BINARIOS                       */
@@ -176,8 +164,7 @@ int btn_level(btn* root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree)
  * Comparar dos valores
  * - Devuelve -1 si a < b, 0 si son iguales, 1 si a > b 
  */
-int
-cmp(t_elem_btree value_a, t_elem_btree value_b)
+int cmp(t_elem_btree value_a, t_elem_btree value_b)
 {
     if (value_a > value_b)
     {
