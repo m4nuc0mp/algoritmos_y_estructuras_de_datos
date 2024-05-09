@@ -160,7 +160,7 @@ int _btn_level(btn *node, t_elem_btree value, int level, int cmp(t_elem_btree, t
 
 int btn_level(btn* root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree)) {
     /**** COMPLETAR ****/
-
+    
     // Consultar!!
 }
 
