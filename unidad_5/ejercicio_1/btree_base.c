@@ -156,12 +156,29 @@ int _btn_level(btn *node, t_elem_btree value, int level, int cmp(t_elem_btree, t
     /**** COMPLETAR ****/
 
     // Consultar!!
+
+    if (cmp(node->value, value) == 0)
+    {
+        return level;
+    }
+    else
+    {
+        return 1 + _btn_level()
+    }
+    
 }
 
 int btn_level(btn* root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree)) {
     /**** COMPLETAR ****/
     
     // Consultar!!
+    int level = 0;
+
+    if (NULL != root)
+    {
+        _btn_level
+    }
+    
 }
 
 /**
