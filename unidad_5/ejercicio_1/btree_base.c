@@ -32,15 +32,15 @@
  */
 btn* btn_new(t_elem_btree value) {
     /**** COMPLETAR ****/
-    btn* new_node = (btn*) malloc(sizeof(btn));
+    btn* newnodo = (btn*) malloc(sizeof(btn));
 
-    if (NULL != new_node)
+    if (NULL != newnodo)
     {
-        new_node->value = value;
-        new_node->left = NULL;
-        new_node->right = NULL;
+        newnodo->value = value;
+        newnodo->left = NULL;
+        newnodo->right = NULL;
     }
-    return new_node;
+    return newnodo;
 }
 
 /**
@@ -142,9 +142,9 @@ int btn_insert(btn **node, btn *newNode) {
  */
 int btn_insert_value(btn **node, int value) {
     /**** COMPLETAR ****/
-    btn* new_node = btn_new(value);
+    btn* newnodo = btn_new(value);
 
-    return btn_insert(node, new_node);
+    return btn_insert(node, newnodo);
 }
 
 
@@ -163,7 +163,7 @@ int _btn_level(btn *node, t_elem_btree value, int level, int cmp(t_elem_btree, t
     }
     else
     {
-        return 1 + _btn_level()
+
     }
     
 }
@@ -176,7 +176,7 @@ int btn_level(btn* root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree)
 
     if (NULL != root)
     {
-        _btn_level
+
     }
     
 }

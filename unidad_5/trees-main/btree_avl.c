@@ -90,17 +90,17 @@ int btn_balance_tree(btn **node) {
  * afectados los ancestros del nodo insertado (es decir que son
  * solo estos los que pueden quedar desbalanceados)
  */
-int avl_insert_node_simple(btn **node, btn *newNode, int cmp (t_elem_btree, t_elem_btree)) {
+int avl_insertnodo_simple(btn **node, btn *newNode, int cmp (t_elem_btree, t_elem_btree)) {
     /**** COMPLETAR ****/
 }
 
 /**
  * Inserta un Nodo en un AVL
  * Recorre una vez hasta la insersión y cuando "vuelve" balancea
- * no usa sbt_insert_node y ni btn_balance_tree
+ * no usa sbt_insertnodo y ni btn_balance_tree
  * solo usa btn_balance
  */
-int avl_insert_node(btn **node, btn *newNode, int cmp (t_elem_btree, t_elem_btree)) {
+int avl_insertnodo(btn **node, btn *newNode, int cmp (t_elem_btree, t_elem_btree)) {
     if (node == NULL) return 0;
     if (newNode == NULL) return 1;
 
