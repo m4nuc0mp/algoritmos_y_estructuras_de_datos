@@ -1,28 +1,6 @@
 #include "btree_base.h"
 
 /**************************************************************/
-/*                       NOMENCLATURAS                        */
-/**************************************************************/
-/**
- * BT - Binary Tree: Árbol binario.
- * BTN - binary tree node: nodo de árbol binario.
- * SBT - Search Binary Tree: ABB - Árbol binario de búsqueda.
- * AVL - AVL Tree: Árbol AVL.
- * root: nodo raíz del árbol.
- * parent node: nodo padre.
- * child node: nodo hijo.
- * internal node,
- * inner node,
- * inode,
- * branch node: nodo interno, que tiene hijos.
- * external node,
- * leaf node,
- * outer node,
- * terminal node: nodo hoja de un árbol.
- */
-/**************************************************************/
-
-/**************************************************************/
 /*             ÁRBOLES BINARIOS DE BÚSQUEDA                   */
 /**************************************************************/
 
@@ -30,7 +8,9 @@
  * Devuelve el valor máximo entre 2 enteros.
  * Función auxiliar utilizada en height.
  */
-t_elem_btree _max_elem (t_elem_btree a, t_elem_btree b, int cmp (t_elem_btree, t_elem_btree) ) {
+t_elem_btree _max_elem(
+    t_elem_btree a, t_elem_btree b, int cmp (t_elem_btree, t_elem_btree))
+{
     return (cmp(a, b) > 0) ? a : b;    
 }
 
@@ -46,12 +26,13 @@ t_elem_btree _max_elem (t_elem_btree a, t_elem_btree b, int cmp (t_elem_btree, t
  *  1 si pudo insertar
  *  0 si no pudo insertar
  */
-int sbt_insertnodo(btn **node, btn *newNode, int cmp (t_elem_btree, t_elem_btree)) {
+int sbt_insert_node(
+    btn **node, btn *newNode, int cmp (t_elem_btree, t_elem_btree))
+{
     if (node == NULL) return 0;
     if (newNode == NULL) return 1;
 
     /**** COMPLETAR ****/
-    
 }
 
 /**
@@ -66,7 +47,9 @@ int sbt_insertnodo(btn **node, btn *newNode, int cmp (t_elem_btree, t_elem_btree
  *  1 si pudo insertar
  *  0 si no pudo insertar
  */
-int sbt_insert_value(btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree)) {
+int sbt_insert_value(
+    btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree))
+{
     
     /**** COMPLETAR ****/
 }
@@ -79,7 +62,8 @@ int sbt_insert_value(btn **node, t_elem_btree value, int cmp (t_elem_btree, t_el
  * o la raíz) que donde se encuentra el puntero al nodo del subárbol donde se
  * va a buscar
  */
-btn** sbt_get_minnodo(btn **node) {
+btn** sbt_get_min_node(btn **node)
+{
     if (node == NULL) return NULL;     // []->[]->nodo
     if ((*node) == NULL) return node;  // []->nodo
 
@@ -89,7 +73,8 @@ btn** sbt_get_minnodo(btn **node) {
 /**
  * Devuelve el valor mínimo de un SBT
  */
-t_elem_btree sbt_min(btn *node) {
+t_elem_btree sbt_min(btn *node)
+{
     /**** COMPLETAR ****/
 }
 
@@ -101,16 +86,19 @@ t_elem_btree sbt_min(btn *node) {
  * o la raíz) que donde se encuentra el puntero al nodo del subárbol donde se
  * va a buscar
  */
-btn** sbt_get_maxnodo(btn **node) {
+btn** sbt_get_max_node(btn **node)
+{
     /**** COMPLETAR ****/
 }
 
 /**
  * Devuelve el valor máximo de un SBT
  */
-t_elem_btree sbt_get_max_value(btn *node) {
+t_elem_btree sbt_get_max_value(btn *node)
+{
     if (node == NULL) return -1;
-    btn **r = sbt_get_maxnodo(&node);
+    btn **r = sbt_get_max_node(&node);
+
     return (*r)->value;
 }
 
@@ -123,7 +111,9 @@ t_elem_btree sbt_get_max_value(btn *node) {
  *          *node: el puntero al nodo del sub-árbol donde se
  * va a buscar.
  */
-btn* sbt_findr(btn *node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree)) {
+btn* sbt_findr(
+    btn *node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree))
+{
     /**** COMPLETAR ****/
 }
 
@@ -135,7 +125,9 @@ btn* sbt_findr(btn *node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btre
  *          *node: el puntero al nodo del sub-árbol donde se
  * va a buscar.
  */
-btn *sbt_findi(btn *node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree)) {
+btn *sbt_findi(
+    btn *node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree))
+{
     /**** COMPLETAR ****/
 }
 
@@ -149,7 +141,9 @@ btn *sbt_findi(btn *node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btre
  * o la raíz) que donde se encuentra el puntero al nodo del subárbol donde se
  * va a buscar.
  */
-btn** sbt_findnodo(btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree)) {
+btn** sbt_find_node(
+    btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree))
+{
     if (node == NULL) return NULL;     // []->[]->nodo
     if ((*node) == NULL) return NULL;  // []->nodo
 
@@ -165,14 +159,17 @@ btn** sbt_findnodo(btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem
  * va a buscar.
  * Devuelve una doble puntero para permitir la modificación.
  */
-btn** sbt_findii(btn** node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree)) {
+btn** sbt_findii(
+    btn** node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree))
+{
     /**** COMPLETAR ****/
 }
 
 /**
  * Devuelve 1 si un valor se encuentra en el árbol, o 0 si no se encuentra
  */
-int sbt_in(btn* node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree)) {
+int sbt_in(btn* node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree))
+{
     /**** COMPLETAR ****/
 }
 
@@ -184,7 +181,8 @@ int sbt_in(btn* node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree)) 
  * o la raíz) que donde se encuentra el puntero al nodo del subárbol donde se
  * va a eliminar.
  */
-btn* sbt_removenodo(btn **node,  int cmp (t_elem_btree, t_elem_btree)) {
+btn* sbt_remove_node(btn **node,  int cmp (t_elem_btree, t_elem_btree))
+{
     /**** COMPLETAR ****/
 }
 
@@ -196,7 +194,8 @@ btn* sbt_removenodo(btn **node,  int cmp (t_elem_btree, t_elem_btree)) {
  * o la raíz) que donde se encuentra el puntero al nodo del subárbol donde se
  * va a eliminar.
  */
-btn* sbt_removenodo2(btn **node) {
+btn* sbt_remove_node2(btn **node)
+{
     /**** COMPLETAR ****/
 }
 
@@ -211,7 +210,8 @@ btn* sbt_removenodo2(btn **node) {
  * o la raíz) que donde se encuentra el puntero al nodo del subárbol donde se
  * va a eliminar.
  */
-btn *sbt_removenodo_smart(btn **node) {
+btn *sbt_remove_node_smart(btn **node)
+{
     if (!node) return NULL;
     if (!(*node)) return NULL;
 
@@ -224,7 +224,9 @@ btn *sbt_removenodo_smart(btn **node) {
  * Devuelve 1 si pudo eliminarlo,
  * Devuelve 0 si no pudo
  */
-int sbt_remove_value(btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree)) {
+int sbt_remove_value(
+    btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree))
+{
     /**** COMPLETAR ****/
 }
 
@@ -233,7 +235,9 @@ int sbt_remove_value(btn **node, t_elem_btree value, int cmp (t_elem_btree, t_el
  * Usa método de reemplazo del máximo de la rama izquierda o mínimo de la rama
  * derecha. Devuelve 1 si pudo eliminarlo, o 0 si no pudo.
  */
-int sbt_remove_value2(btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree)) {
+int sbt_remove_value2(
+    btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree))
+{
     /**** COMPLETAR ****/
 }
 
@@ -243,6 +247,8 @@ int sbt_remove_value2(btn **node, t_elem_btree value, int cmp (t_elem_btree, t_e
  * según cual sea más alto.
  * Devuelve 1 si pudo eliminarlo, o 0 si no pudo.
  */
-int sbt_remove_value_smart(btn **node, int value, int cmp (t_elem_btree, t_elem_btree)) {
+int sbt_remove_value_smart(
+    btn **node, int value, int cmp (t_elem_btree, t_elem_btree))
+{
     /**** COMPLETAR ****/
 }

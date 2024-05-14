@@ -24,7 +24,7 @@ int32_t reading_get_minute(reading* re);
 
 temp_unit reading_get_temp(reading* re);
 
-int8_t reading_cmp(reading* re_1, reading re_2);
+int8_t reading_cmp(reading* re_1, reading* re_2);
 
 ////////////////////////////////////////////////////////////////////////////////
 //////////////////////// PILA DE VARIAS DE LECTURAS ////////////////////////////
@@ -82,7 +82,7 @@ typedef struct _sll_node
 
 sll_node* sll_new_node(list_elem element);
 
-int8_t sll_add_node(sll_node** head, sll_node* new_node);
+sll_node* sll_add_node(sll_node** head, sll_node* new_node);
 
 sll_node* sll_temp_stacks_simulation(
     int32_t max_time, int32_t temp_min, int32_t temp_max, int32_t step,
@@ -99,7 +99,11 @@ int32_t rand_temp(temp_unit min_temp, temp_unit max_temp, temp_unit step);
 ///////////////////// ARBOLES BINARIOS Y DE BUSQUEDA ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+
+// ARBOLES BINARIOS
+
 #define t_elem_btree reading
+
 typedef struct _btn {
     t_elem_btree value;
     struct _btn *left;
@@ -145,6 +149,57 @@ int _btn_print(
     char s[20][255], void toStr (btn*, char*));
 
 void btn_print(btn *tree, void toStr (btn*, char*));
+
+// ARBOLES BINARIOS DE BUSQUEDA
+
+t_elem_btree _max_elem (
+    t_elem_btree a, t_elem_btree b, int cmp (t_elem_btree, t_elem_btree));
+
+int sbt_insert_node(
+    btn **node, btn *newNode, int cmp (t_elem_btree, t_elem_btree));
+
+int sbt_insert_value(
+    btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree));
+
+btn** sbt_get_min_node(btn **node);
+
+t_elem_btree sbt_min(btn *node);
+
+btn** sbt_get_max_node(btn **node);
+
+t_elem_btree sbt_get_max_value(btn *node);
+
+btn* sbt_findr(
+    btn *node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree));
+
+btn *sbt_findi(
+    btn *node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree));
+
+btn** sbt_find_node(
+    btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree));
+
+btn** sbt_findii(
+    btn** node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree));
+
+int sbt_in(
+    btn* node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree));
+
+btn* sbt_remove_node(btn **node,  int cmp (t_elem_btree, t_elem_btree));
+
+btn* sbt_remove_node2(btn **node);
+
+btn *sbt_remove_node_smart(btn **node);
+
+int sbt_remove_value(
+    btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree));
+
+int sbt_remove_value2(
+    btn **node, t_elem_btree value, int cmp (t_elem_btree, t_elem_btree));
+
+int sbt_remove_value_smart(
+    btn **node, int value, int cmp (t_elem_btree, t_elem_btree));
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////// COLA DE MEDICIONES ORDENADAS ///////////////////////////

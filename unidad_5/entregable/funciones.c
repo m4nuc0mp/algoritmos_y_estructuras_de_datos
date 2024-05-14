@@ -215,7 +215,6 @@ stack* temp_stack_simulation(
             )
         );
     }
-
     return readings_stack;
 }
 
@@ -294,7 +293,150 @@ int32_t rand_temp(temp_unit min_temp, temp_unit max_temp, temp_unit step)
 ///////////////////// ARBOLES BINARIOS Y DE BUSQUEDA ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+btn* btn_new(t_elem_btree value)
+{
+    btn* new_node = (btn*) malloc(sizeof(btn));
 
+    if (NULL != new_node)
+    {
+        new_node->value = value;
+        new_node->left = NULL;
+        new_node->right = NULL;
+    }
+    return new_node;
+}
+
+void btn_free(btn** node)
+{
+    if (NULL != *node)
+    {
+        btn_free(&(*node)->left);
+        btn_free(&(*node)->right);
+        free(*node);
+    }
+}
+
+btn** btn_find(
+    btn** node, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree))
+{
+    if ((NULL == *node) || cmp(value, (*node)->value))
+    {
+        return node;
+    }
+    else if (value < (*node)->value)
+    {
+        btn_find(&(*node)->left, value, cmp);
+    }
+    else
+    {
+        btn_find(&(*node)->right, value, cmp);
+    }
+}
+
+int btn_isLeaf(btn *node)
+{
+    int is_a_leaf = 0;
+
+    if ( (NULL == node->left) && (NULL == node->right) )
+    {
+        is_a_leaf = 1;
+    }
+    return is_a_leaf;
+}
+
+int btn_count(btn *node)
+{
+    int result = 0;
+    if (node != NULL) {
+        result = 1 + btn_count(node->left) + btn_count(node->right);
+    }
+    return result;
+}
+
+int btn_insert(btn **node, btn *newNode)
+{
+    int success = 1;
+    int left_childs = btn_count((*node)->left);
+    int right_childs = btn_count((*node)->right);
+
+    if (NULL == *node)
+    {
+        *node = newNode;
+    }
+    else if (left_childs <= right_childs)
+    {
+        btn_insert(&(*node)->left, newNode);
+    }
+    else if (left_childs > right_childs)
+    {
+        btn_insert(&(*node)->right, newNode);
+    }
+    else
+    {
+        success = 0;
+    }
+    return success;
+}
+
+int btn_insert_value(btn **node, int value)
+{
+
+}
+
+int _btn_level(
+    btn *node, t_elem_btree value,
+    int level, int cmp(t_elem_btree, t_elem_btree))
+{
+
+}
+
+int btn_level(
+    btn* root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree))
+{
+
+}
+
+int cmp(t_elem_btree value_a, t_elem_btree value_b)
+{
+
+}
+
+int _max(int a, int b)
+{
+
+}
+
+t_elem_btree btn_height(btn *node)
+{
+
+}
+
+void btn_inorder(btn *node, void btn_do(btn*, void*), void* ctx)
+{
+
+}
+
+void btn_postorder(btn *node, void btn_do(btn*, void*), void* ctx)
+{
+
+}
+
+void btn_preorder(btn *node, void btn_do(btn*, void*), void* ctx)
+{
+
+}
+
+int _btn_print(
+    btn *tree, int is_left, int offset, int depth,
+    char s[20][255], void toStr (btn*, char*))
+{
+
+}
+
+void btn_print(btn *tree, void toStr (btn*, char*))
+{
+
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////// COLA DE MEDICIONES ORDENADAS ///////////////////////////
@@ -344,9 +486,37 @@ queue* queue_dequeue(queue** head)
     return aux;
 }
 
-int test_temps_sorting(queue* temps)
+int64_t queue_count_items(queue** head)
 {
+    int64_t n_items = 0;
 
+    if (NULL != *head)
+    {
+        while (NULL != (*head)->next)
+        {
+            n_items++;
+            head = (*head)->next;
+        }
+    }
+    return n_items;
+}
+
+int test_temps_sorting(queue** temps, int64_t n_items)
+{
+    int64_t sorted_pair_counter = 0;
+
+    if (NULL != temps)
+    {
+        for (;
+            ((*temps)->value != NULL) && ((*temps)->next->value != NULL) &&
+            ((*temps)->value < (*temps)->next->value)            
+            ;temps = (*temps)->next
+            )
+        {
+            sorted_pair_counter++;
+        }    
+    }
+    return (sorted_pair_counter == n_items-1) ? 1 : 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

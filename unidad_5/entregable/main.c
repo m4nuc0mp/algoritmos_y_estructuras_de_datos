@@ -15,5 +15,12 @@ int main(void)
         MAX_TIME, MIN_TEMP, MAX_TEMP, STEP, NEX, NSLL
         );
 
+    queue* sorted_measurements = make_sorted_temp_queue(measurements_list);
+
+    if (test_temps_sorting(sorted_measurements))
+    {
+        printf("Temperature Readings List sorting is correct.\n");
+    }
+    
     return 0;
 }
