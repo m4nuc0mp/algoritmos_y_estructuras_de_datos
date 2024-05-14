@@ -1,100 +1,131 @@
 #include "pilas.h"
 
-pila* crear_nodo_pila(tipo_elemento elemento)
+stack_node* stack_node_create(elem_type elem)
 {
-    pila* nuevo_nodo = (pila*) malloc(sizeof(pila));
+    stack_node* new_node = (stack_node*) malloc(sizeof(stack_node));
 
-    if (NULL != nuevo_nodo)
+    if (NULL != new_node)
     {
-        nuevo_nodo->valor = elemento;
-        nuevo_nodo->proximo = NULL;
+        new_node->value = elem;
+        new_node->next = NULL;
     }
-    return nuevo_nodo;
+    return new_node;
 }
 
-void liberar_pila_en_memoria(pila* p)
+stack* stack_create(int64_t init_size)
 {
-    pila* auxiliar = NULL;
+    stack* new_stack = (stack*) malloc(sizeof(stack));
 
-    while (NULL != p)
+    if (NULL != new_stack)
     {
-        auxiliar =   
+        new_stack->head = NULL;
+        new_stack->count = 0;
+        new_stack->max_size = init_size;
     }
+    return new_stack;
+}
+
+void stack_free(stack* trash)
+{
+    stack_node* aux = NULL;
+
+    while (NULL != trash->head)
+    {
+        aux = trash->head;
+        trash->head = trash->head->next;
+        free(aux);
+    }
+    free(trash);
+}
+
+int64_t stack_get_size(stack* some_stack)
+{
+    int64_t stack_size = 0;
+
+    if (NULL != some_stack)
+    {
+        stack_size = some_stack->count;    
+    }
+    else
+    {
+        stack_size = -1;
+    }
+    return stack_size;
+}
+
+int64_t stack_get_max_size(stack* some_stack)
+{
+    if (some_stack->max_size == stack_get_size(some_stack))
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void stack_push(stack* some_stack, elem_type elem)
+{
+    stack_node* new_node = stack_node_create(elem);
+
+    if ((NULL != new_node) && (!stack_is_full(some_stack)))
+    {
+        new_node->next = some_stack->head;
+        some_stack->count++;
+        some_stack->head->next = new_node;
+    }
+}
+
+stack_node* pop(stack* some_stack)
+{
+    stack_node* aux = NULL;
+
+    if (!stack_is_empty(some_stack))
+    {
+        aux = some_stack->head;
+        some_stack->head = some_stack->head->next;
+        some_stack->count--;
+        aux->next = NULL;
+    }
+    return aux;
+}
+
+elem_type stack_top(stack* some_stack)
+{
+    if ((!stack_is_empty(some_stack)) && (NULL != some_stack))
+    {
+        return some_stack->head->value;    
+    }    
+}
+
+int8_t stack_is_empty(stack* some_stack)
+{
+    int8_t is_empty = 0;
     
+    if (0 == some_stack->count)
+    {
+        is_empty = 1;
+    }
+    else
+    {
+        is_empty = 0;
+    }
+    return is_empty;
 }
 
-int obtener_tam_pila(pila* p)
+int8_t stack_is_full(stack* some_stack)
 {
-    pila* auxiliar = NULL;
-    int contador = 0;
-
-    while (NULL != p)
-    {
-        auxiliar = sacar_de_pila(p);
-        auxiliar->proximo = NULL;
-        contador++;
-    }
-
-    while (NULL != auxiliar)
-    {
-        p = sacar_de_pila(auxiliar);
-    }
+    int8_t is_full = 0;
     
-
-    
-}
-
-int obtener_tam_max_pila(pila* p)
-{
-
-}
-
-int decir_si_pila_vacia(pila* p)
-{
-    int vacia = 0;
-
-    if (NULL == p)
+    if (0 == some_stack->count)
     {
-        vacia = 1;
+        is_full = 1;
     }
-    return vacia;
+    else
+    {
+        is_full = 0;
+    }
+    return is_full;
 }
 
-int decir_si_pila_llena(pila* p)
-{
-    return 0;
-}
-
-void ingresar_en_pila(pila* p, tipo_elemento e)
-{
-    pila* nuevo_nodo = crear_nodo_pila(e);
-    pila** cabecera = &p;
-
-    /*
-        h-->p
-        nuevo-->p
-        h-->nuevo
-    */
-   nuevo_nodo->proximo = p;
-
-}
-
-pila* sacar_de_pila(pila* p)
-{
-    pila* extraido = p;
-    pila* p = p->proximo;
-
-    return extraido;
-}
-
-tipo_elemento ver_tope_pila(pila* p)
-{
-    return p->valor;
-}
-
-void eliminar_pila(pila* p, void eliminar_elemento(tipo_elemento e))
-{
-    pila* eliminado = sacar_de_pila(p);
-    eliminar_elemento(eliminado->valor);
-    free(eliminado);
-}

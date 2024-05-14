@@ -1,28 +1,19 @@
-#ifndef TEMP_H_INCLUDED
-#define TEMP_H_INCLUDED
+#ifndef LECTURAS_H_INCLUDED
+#define LECTURAS_H_INCLUDED
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+#include "cabecera.h"
 
-#define unidad_temp int32_t
-
-/**
- * Construir un TDA, básico para las lecturas: crear, borrar, obtener minuto,
- * obtener temperatura y comparar.
- * 
-*/
-
-typedef struct
+#define temp_unit int32_t
+typedef struct _reading
 {
-    int minutos;
-    unidad_temp temp;
-} lecturas;
+    int32_t min;
+    temp_unit temp;
+} reading;
 
-lecturas* crear_lectura(int minutos, unidad_temp temp);
-void borrar_lectura(lecturas* basura);
-int obtener_minutos(lecturas* lectura);
-unidad_temp obtener_temp(lecturas* lectura);
-int comparar_lecturas(lecturas* lectura_1, lecturas* lectura_2);
+reading* reading_create(int32_t min, temp_unit temp);
+void reading_delete(reading* re);
+int32_t reading_get_minute(reading* re);
+temp_unit reading_get_temp(reading* re);
+int8_t reading_cmp(reading* re_1, reading re_2);
 
-#endif
+#endif  // LECTURAS_H_INCLUDED

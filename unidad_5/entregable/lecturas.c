@@ -1,89 +1,59 @@
-/**
- * 
- * Construir un TDA, básico para las lecturas: crear, borrar, obtener minuto,
- * obtener temperatura y comparar.
- * 
- * Hacer una función que simule la creación de la pila con distintas lecturas
- * (lecturas), tomando minutos y temperaturas en forma aleatoria pero coherentes:
- * 
- *      -Los minutos deben ser entre 0 y 1440
- *      -Las temperaturas entre -10 y 40 grados, no debería variar más de 5
- *      grados cada lectura.
- *      -Al menos debe haber entre 20 y 30 lecturas.
- * 
-*/
+#include "lecturas.h"
 
-#include "cabecera.h"
-
-lecturas* crear_lectura(int minutos, unidad_temp temp) // void?
+reading* reading_create(int32_t min, temp_unit temp)
 {
-    lecturas* nueva_medida = NULL;
+    reading* new_reading = (reading*) malloc(sizeof(reading));
 
-    nueva_medida->minutos = minutos;
-    nueva_medida->temp = temp;
-    return nueva_medida;
-}
-
-void borrar_lectura(lecturas* basura)
-{
-    free(basura);
-}
-
-int obtener_minutos(lecturas* lectura)
-{
-    int valor = 0;
-
-    if (NULL != lectura)
+    if (NULL != new_reading)
     {
-        valor = lectura->minutos;
+        new_reading->min = min;
+        new_reading->temp = temp;
     }
-    return valor;
+    return new_reading;
 }
 
-unidad_temp obtener_temp(lecturas* lectura)
+void reading_delete(reading* re)
 {
-    unidad_temp valor = 0;
-
-    if (NULL != lectura)
-    {
-        valor = lectura->temp;
-    }
-    return valor;
+    free(re);
 }
 
-int comparar_lecturas(lecturas* lectura_1, lecturas* lectura_2)
+int32_t reading_get_minute(reading* re)
 {
-    int resultado = 0;
+    int32_t time = -1;
 
-    if ((NULL != lectura_1) && (NULL != lectura_2))
+    if (NULL != re)
     {
-        if (lectura_1->temp < lectura_2->temp)
-        {
-            resultado = 1;    
-        }
-        else if (lectura_1->temp > lectura_2->temp)
-        {
-            resultado = -1;
-        }
-        else
-        {
-            resultado = 0;
-        }
+        time = re->min;
     }
-    return resultado;
+    return time;
 }
 
-pila* generar_pila_aleatoria_temps(int cantidad)
+temp_unit reading_get_temp(reading* re)
 {
-    pila* cabecera = NULL;
+    int32_t temp = -274;
 
-    if ( (cantidad >= 20) && (cantidad <= 30) )
+    if (NULL != re)
     {
-        for (int contador = 0; contador < cantidad; contador++)
-        {
-            pila* nodo = crear_nodo_pila()
-        }
+        temp = re->temp;
     }
+    return temp;
+}
 
-    return cabecera;
+int8_t reading_cmp(reading* re_1, reading* re_2)
+{
+    int8_t result = 0;
+
+    if (re_1->temp < re_2->temp)
+    {
+        result = -1;
+    }
+    else if (re_1->temp > re_2->temp)
+    {
+        result = 1;
+    }
+    else
+    {
+        result = 0;
+    }
+    return result;
 }
